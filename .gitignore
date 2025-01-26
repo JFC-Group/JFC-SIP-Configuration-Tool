@@ -120,6 +120,6 @@ dmypy.json
 #Pycharm IDE
 .idea
 
-# JFC-SIP-Configuration-Tool
+# JFC-MicroSIP
 microsip.ini
 JFC_CONFIG_DONE
