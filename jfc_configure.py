@@ -3,12 +3,14 @@ from ssl import CERT_NONE, create_default_context
 import argparse
 import configparser
 import logging
+import os
 import requests
-import socket
 import requests.cookies
+import socket
+import sys
 import xml.etree.ElementTree as ET
 import urllib3
-import os
+
 
 # Disable SSL warnings (since JioFiber uses a self-signed certificate)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -487,7 +489,8 @@ def ims_register(domain: str, port: int, hostname: str, mac: str) -> bool:
     logging.info("Registering the device on JioFiber SIP...")
     if not ask_confirmation("An OTP will be sent to your registered mobile number."):
         logging.info("Registration cancelled by the user.")
-        exit(0)
+        input("Press any key to exit...")
+        sys.exit(0)
 
     response = ims_request(domain, port, hostname, mac, add_req=True)
     logging.debug(response)
@@ -672,4 +675,4 @@ if __name__ == "__main__":
     setup_logger(args.log_level)
 
     main(args.no_otp)
-    input("Press Enter to exit...")
+    input("Press any key to exit...")
