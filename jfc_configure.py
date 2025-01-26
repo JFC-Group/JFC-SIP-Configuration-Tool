@@ -235,10 +235,10 @@ def raw_http_request(url, method="GET", headers=None, ignore_ssl=True):
 def get_current_directory():
     # Get the directory where the executable is located
     if getattr(sys, 'frozen', False):  # Check if the script is running as an executable
-        exe_directory = os.path.dirname(sys.executable)
+        current_directory = os.path.dirname(sys.executable)
     else:
-        exe_directory = os.path.dirname(os.path.abspath(__file__))
-    return exe_directory
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+    return current_directory
 
 
 def setup_logger(log_level: int):
