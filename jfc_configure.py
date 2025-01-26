@@ -588,6 +588,7 @@ def parse_sip_config(
     print("-"*80)
     with open(os.path.join(SCRIPT_DIR, DEFAULT_CONFIG_FLAG_FILENAME), "w") as flagfile:
         flagfile.write("1")
+    print("Configuration Done! Please restart MicroSIP to apply the changes.")
 
 
 def main(no_otp: bool = False):
@@ -671,3 +672,4 @@ if __name__ == "__main__":
     setup_logger(args.log_level)
 
     main(args.no_otp)
+    input("Press Enter to exit...")
