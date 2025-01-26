@@ -15,7 +15,6 @@ import urllib3
 # Disable SSL warnings (since JioFiber uses a self-signed certificate)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HASH_MULTIPLIER = 33
 DEFAULT_JIOFIBER_HOSTNAME = "jiofiber.local.html"
 DEFAULT_JIOFIBER_HTTPS_PORT = 8443
@@ -231,6 +230,15 @@ def raw_http_request(url, method="GET", headers=None, ignore_ssl=True):
 
     finally:
         sock.close()
+
+
+def get_current_directory():
+    # Get the directory where the executable is located
+    if getattr(sys, 'frozen', False):  # Check if the script is running as an executable
+        exe_directory = os.path.dirname(sys.executable)
+    else:
+        exe_directory = os.path.dirname(os.path.abspath(__file__))
+    return exe_directory
 
 
 def setup_logger(log_level: int):
@@ -576,7 +584,7 @@ def parse_sip_config(
     config.set("Account1", "proxy", f"{jiofiber_hostname}:5068")
     config.set("Account1", "domain", f"{jiofiber_hostname}:5068")
 
-    with open(os.path.join(SCRIPT_DIR, "microsip.ini"), "w") as configfile:
+    with open(os.path.join(get_current_directory(), "microsip.ini"), "w") as configfile:
         config.write(configfile)
 
     logging.info("SIP Configuration saved to microsip.ini!")
@@ -589,7 +597,7 @@ def parse_sip_config(
     print("Follow: https://github.com/JFC-Group for updates regarding JioFiber and AirFiber!")
     print("Follow: https://github.com/itsyourap")
     print("-"*80)
-    with open(os.path.join(SCRIPT_DIR, DEFAULT_CONFIG_FLAG_FILENAME), "w") as flagfile:
+    with open(os.path.join(get_current_directory(), DEFAULT_CONFIG_FLAG_FILENAME), "w") as flagfile:
         flagfile.write("1")
     print("Configuration Done! Please restart MicroSIP to apply the changes.")
 
